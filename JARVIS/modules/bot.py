@@ -10,7 +10,7 @@ from telethon.tl.functions.channels import GetParticipantsRequest
 from telethon.tl.types import ChannelParticipantsSearch
 from config import X1, OWNER_ID, SUDO_USERS, HEROKU_APP_NAME, HEROKU_API_KEY, CMD_HNDLR as hl
 
-REQUIRED_CHANNELS = ["JARVIS_V_SUPPORT", "Dora_Hub"]
+REQUIRED_CHANNELS = ["ALL_SANATANI_BOT", "II_SANATANI_II"]
 
 @X1.on(events.NewMessage(incoming=True, pattern=r"\%sping(?: |$)(.*)" % hl))
 async def ping(event):
@@ -148,8 +148,8 @@ async def manage_multiple_sudo_users(event):
 
 async def prompt_join_channels(event):
     buttons = [
-        [Button.url("ᴊᴀʀᴠɪs sᴜᴘᴘᴏʀᴛ", "https://t.me/JARVIS_V_SUPPORT")],
-        [Button.url("sᴜᴘᴘᴏʀᴛ ᴄʜᴀᴛ", "https://t.me/Dora_Hub")],
+        [Button.url("ᴊᴀʀᴠɪs sᴜᴘᴘᴏʀᴛ", "https://t.me/ALL_SANATANI_BOY")],
+        [Button.url("sᴜᴘᴘᴏʀᴛ ᴄʜᴀᴛ", "https://t.me/II_SANATANI_II")],
         [Button.inline("ᴠᴇʀɪғʏ ✅", b"verify_membership")]
     ]
     await event.reply("ᴛᴏ ᴜsᴇ ᴛʜɪs ғᴇᴀᴛᴜʀᴇ, ᴘʟᴇᴀsᴇ ᴊᴏɪɴ ᴛʜᴇ ғᴏʟʟᴏᴡɪɴɢ ᴠᴀʀs ᴀɴᴅ ᴛʜᴇɴ ᴄʟɪᴄᴋ ᴏɴ ᴠᴇʀɪғʏ:", buttons=buttons)
