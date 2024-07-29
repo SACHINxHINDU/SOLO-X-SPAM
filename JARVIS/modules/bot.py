@@ -107,7 +107,7 @@ async def manage_sudo_users(event, add):
   #      app = heroku.app(HEROKU_APP_NAME)
    # else:
       #  await event.reply("`[HEROKU]:" "\nPlease setup your` **HEROKU_APP_NAME**")
-        return
+     #   return
 
     #heroku_var = app.config()
     if add:
