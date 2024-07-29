@@ -115,7 +115,7 @@ async def manage_sudo_users(event, add):
             await event.reply("ᴛʜɪs ɢᴜʏ ɪs ᴀʟʀᴇᴀᴅʏ ɪɴ ᴛʜᴇ sᴜᴅᴏ ᴜsᴇʀ ʟɪsᴛ.")
         else:
             new_sudo_users = f"{sudousers} {target}".strip()
-            heroku_var["SUDO_USERS"] = new_sudo_users
+         #   heroku_var["SUDO_USERS"] = new_sudo_users
             await event.reply(f"ᴀᴅᴅᴇᴅ ɴᴇᴡ sᴜᴅᴏ ᴜsᴇʀs: `{target}`. ʀᴇsᴛᴀʀᴛɪɴɢ ʙᴏᴛ.")
     else:
         if target not in sudousers.split():
