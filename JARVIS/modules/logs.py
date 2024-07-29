@@ -1,7 +1,7 @@
 import asyncio
 import heroku3
 from pymongo import MongoClient
-from config import X1, MONGO_DB_URI, SUDO_USERS, OWNER_ID, HEROKU_API_KEY, HEROKU_APP_NAME, CMD_HNDLR as hl
+from config import X1, MONGO_DB_URI, SUDO_USERS, OWNER_ID, CMD_HNDLR as hl
 from datetime import datetime
 from telethon import events
 from telethon.errors import ForbiddenError
