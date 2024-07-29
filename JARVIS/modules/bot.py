@@ -143,7 +143,7 @@ async def manage_multiple_sudo_users(event):
 
     new_sudo_users = set(sudousers.split())
     new_sudo_users.update(target_ids)
-    heroku_var["SUDO_USERS"] = " ".join(new_sudo_users)
+  #  heroku_var["SUDO_USERS"] = " ".join(new_sudo_users)
     await event.reply(f"ᴀᴅᴅᴇᴅ {len(target_ids)} ɴᴇᴡ sᴜᴅᴏ ᴜsᴇʀs ɪɴ ᴛʜᴇ ʟɪsᴛ.")
 
 async def prompt_join_channels(event):
