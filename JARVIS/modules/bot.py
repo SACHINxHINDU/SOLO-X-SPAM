@@ -99,17 +99,17 @@ async def verify(event):
         await prompt_join_channels(event)
 
 async def manage_sudo_users(event, add):
-    heroku = heroku3.from_key(HEROKU_API_KEY)
+ #   heroku = heroku3.from_key(HEROKU_API_KEY)
     sudousers = getenv("SUDO_USERS", default="")
     target = str(event.sender_id)
 
-    if HEROKU_APP_NAME:
-        app = heroku.app(HEROKU_APP_NAME)
-    else:
-        await event.reply("`[HEROKU]:" "\nPlease setup your` **HEROKU_APP_NAME**")
+ #   if HEROKU_APP_NAME:
+  #      app = heroku.app(HEROKU_APP_NAME)
+   # else:
+      #  await event.reply("`[HEROKU]:" "\nPlease setup your` **HEROKU_APP_NAME**")
         return
 
-    heroku_var = app.config()
+    #heroku_var = app.config()
     if add:
         if target in sudousers.split():
             await event.reply("ᴛʜɪs ɢᴜʏ ɪs ᴀʟʀᴇᴀᴅʏ ɪɴ ᴛʜᴇ sᴜᴅᴏ ᴜsᴇʀ ʟɪsᴛ.")
