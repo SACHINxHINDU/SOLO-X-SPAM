@@ -8,7 +8,7 @@ from datetime import datetime
 from telethon import events, Button
 from telethon.tl.functions.channels import GetParticipantsRequest
 from telethon.tl.types import ChannelParticipantsSearch
-from config import X1, OWNER_ID, SUDO_USERS, HEROKU_APP_NAME, HEROKU_API_KEY, CMD_HNDLR as hl
+from config import X1, OWNER_ID, SUDO_USERS, CMD_HNDLR as hl
 
 REQUIRED_CHANNELS = ["ALL_SANATANI_BOT", "II_SANATANI_II"]
 
