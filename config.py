@@ -18,14 +18,14 @@ API_HASH = "312d861b78efcd1b02183b2ab52a83a4"
 CMD_HNDLR = getenv("CMD_HNDLR", default=".")
 HEROKU_APP_NAME = getenv("HEROKU_APP_NAME", None)
 HEROKU_API_KEY = getenv("HEROKU_API_KEY", None)
-BOT_TOKEN = getenv("BOT_TOKEN", default=None)
-MONGO_DB_URI = getenv("MONGO_DB_URI")
+BOT_TOKEN = getenv("BOT_TOKEN", default="7439140731:AAHk4e5ZmzdPiRt3LJ5p7rUt1nD2xwbF2UQ")
+MONGO_DB_URI = getenv("MONGO_DB_URI", "mongodb+srv://SachinSanatani:SACHINxSANATANI@sanatani.bnmsfbd.mongodb.net/?retryWrites=true&w=majority&appName=Sanatani")
 
 # Set up sudo users
-SUDO_USERS = list(map(int, getenv("SUDO_USERS", default="6757745933").split()))
+SUDO_USERS = list(map(int, getenv("SUDO_USERS", default="5959548791").split()))
 SUDO_USERS.extend(FRIDAY)
 
-OWNER_ID = int(getenv("OWNER_ID", default="7044783841"))
+OWNER_ID = int(getenv("OWNER_ID", default="5959548791"))
 SUDO_USERS.append(OWNER_ID)
 
 # Initialize Telegram client
