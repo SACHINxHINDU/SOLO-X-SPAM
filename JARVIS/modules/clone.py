@@ -9,7 +9,7 @@ from pyrogram.errors.exceptions.bad_request_400 import (
 )
 from pymongo import MongoClient
 from config import API_HASH, API_ID, LOGGER_ID
-from config import X1, SUDO_USERS, MONGO_DB_URI, MONGO_DB_NAME
+from config import X1, SUDO_USERS, MONGO_DB_URI, MONGO_DB_NAME, CMD_HNDLR as hl
 
 
 mongo_client = MongoClient(MONGO_DB_URI)
@@ -19,7 +19,7 @@ mongo_collection = mongo_db[MONGO_DB_NAME]
 CLONES = set()
 
 
-@X1.on_message(filters.command(["clone", "host", "deploy"]) & SUDO_USERS)
+@X1.on(events.NewMessage(incoming=True, pattern=r"\%sclone(?: |$)(.*)" % hl))
 async def clone_txt(client, message):
     userbot = await get_assistant(LOGGER_ID)
     if len(message.command) > 1:
@@ -85,18 +85,7 @@ async def clone_txt(client, message):
         )
 
 
-@X1.on_message(
-    filters.command(
-        [
-            "deletecloned",
-            "delcloned",
-            "delclone",
-            "deleteclone",
-            "removeclone",
-            "cancelclone",
-        ]
-    )
-)
+@X1.on(events.NewMessage(incoming=True, pattern=r"\%sdclone(?: |$)(.*)" % hl))
 async def delete_cloned_bot(client, message):
     try:
         if len(message.command) < 2:
@@ -152,8 +141,7 @@ async def restart_bots():
     except Exception as e:
         logging.exception("Error while restarting bots.")
 
-
-@X1.on_message(filters.command("cloned") & SUDO_USERS)
+@X1.on(events.NewMessage(incoming=True, pattern=r"\%scloned(?: |$)(.*)" % hl))
 async def list_cloned_bots(client, message):
     try:
         cloned_bots = clonebotdb.find()
