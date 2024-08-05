@@ -20,6 +20,7 @@ CMD_HNDLR = getenv("CMD_HNDLR", default=".")
 #HEROKU_API_KEY = getenv("HEROKU_API_KEY", "91f976ce-9ba3-4b3a-8e69-b8eb5c3a64e8")
 BOT_TOKEN = getenv("BOT_TOKEN", default="7439140731:AAHk4e5ZmzdPiRt3LJ5p7rUt1nD2xwbF2UQ")
 MONGO_DB_URI = getenv("MONGO_DB_URI", "mongodb+srv://SachinSanatani:SACHINxSANATANI@sanatani.bnmsfbd.mongodb.net/?retryWrites=true&w=majority&appName=Sanatani")
+MONGO_DB_NAME = getenv("MONGO_DB_NAME", "SACHINxSANATANI")
 
 # Set up sudo users
 SUDO_USERS = list(map(int, getenv("SUDO_USERS", default="5959548791").split()))
