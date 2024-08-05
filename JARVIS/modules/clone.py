@@ -3,7 +3,6 @@ import logging
 from pymongo import MongoClient
 from pyrogram import Client, filters
 from telethon.types import Message
-from telethon.errors.exceptions.bad_request_400 import AccessTokenExpired, AccessTokenInvalid
 from config import API_ID, API_HASH, MONGO_DB_URI, MONGO_DB_NAME, CLONE_MODE
 
 mongo_client = MongoClient(MONGO_DB_URI)
