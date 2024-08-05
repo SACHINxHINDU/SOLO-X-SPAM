@@ -8,11 +8,11 @@ from pymongo import MongoClient
 from pyrogram import Client, filters
 from pyrogram.types import Message
 from pyrogram.errors.exceptions.bad_request_400 import AccessTokenExpired, AccessTokenInvalid
-from config import API_ID, API_HASH, DB_URI, DB_NAME, CLONE_MODE
+from config import API_ID, API_HASH, MONGO_DB_URI, MONGO_DB_NAME, CLONE_MODE
 
-mongo_client = MongoClient(DB_URI)
+mongo_client = MongoClient(MONGO_DB_URI)
 mongo_db = mongo_client["cloned_vjbotz"]
-mongo_collection = mongo_db[DB_NAME]
+mongo_collection = mongo_db[MONGO_DB_NAME]
 
 @Client.on_message(filters.command("clone") & filters.private)
 async def clone(client, message):
@@ -69,10 +69,6 @@ async def delete_cloned_bot(client, message):
     except Exception as e:
         logging.exception("Error while deleting cloned bot.")
         await message.reply_text("An error occurred while deleting the cloned bot.")
-
-# Don't Remove Credit Tg - @VJ_Botz
-# Subscribe YouTube Channel For Amazing Bot https://youtube.com/@Tech_VJ
-# Ask Doubt on telegram @KingVJ01
 
 async def restart_bots():
     logging.info("Restarting all bots........")
