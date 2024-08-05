@@ -10,6 +10,7 @@ from pyrogram.errors.exceptions.bad_request_400 import (
 from pymongo import MongoClient
 from config import API_HASH, API_ID, LOGGER_ID
 from config import X1, SUDO_USERS, MONGO_DB_URI, MONGO_DB_NAME, CMD_HNDLR as hl
+from telethon import events
 
 
 mongo_client = MongoClient(MONGO_DB_URI)
