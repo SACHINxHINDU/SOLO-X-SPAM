@@ -9,7 +9,7 @@ from pyrogram.errors.exceptions.bad_request_400 import (
 )
 
 from config import API_HASH, API_ID, LOGGER_ID
-from config import SUDOERS
+from config import X1, SUDOERS
 
 
 mongo_client = MongoClient(MONGO_DB_URI)
