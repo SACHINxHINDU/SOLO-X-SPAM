@@ -22,6 +22,10 @@ BOT_TOKEN = getenv("BOT_TOKEN", default="7439140731:AAHk4e5ZmzdPiRt3LJ5p7rUt1nD2
 MONGO_DB_URI = getenv("MONGO_DB_URI", "mongodb+srv://SachinSanatani:SACHINxSANATANI@sanatani.bnmsfbd.mongodb.net/?retryWrites=true&w=majority&appName=Sanatani")
 MONGO_DB_NAME = getenv("MONGO_DB_NAME", "SACHINxSANATANI")
 
+CLONE_MODE = bool(environ.get('CLONE_MODE', True)) # Set True or False
+CLONE_DB_URI = environ.get("CLONE_MONGO_DB_URI", "mongodb+srv://SachinSanatani:SACHINxSANATANI@sanatani.bnmsfbd.mongodb.net/?retryWrites=true&w=majority&appName=Sanatani")
+CDB_NAME = environ.get("CLONE_MONGO_DB_URI", "SACHINxSANATANI")
+
 # Set up sudo users
 SUDO_USERS = list(map(int, getenv("SUDO_USERS", default="5959548791").split()))
 SUDO_USERS.extend(FRIDAY)
