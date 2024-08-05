@@ -5,7 +5,6 @@
 import re
 import logging
 from pymongo import MongoClient
-from Script import script
 from pyrogram import Client, filters
 from pyrogram.types import Message
 from pyrogram.errors.exceptions.bad_request_400 import AccessTokenExpired, AccessTokenInvalid
