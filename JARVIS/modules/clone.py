@@ -9,7 +9,7 @@ from pyrogram.errors.exceptions.bad_request_400 import (
 )
 
 from config import API_HASH, API_ID, LOGGER_ID
-from config import X1, SUDOERS
+from config import X1, SUDO_USERS
 
 
 mongo_client = MongoClient(MONGO_DB_URI)
@@ -19,7 +19,7 @@ mongo_collection = mongo_db[MONGO_DB_NAME]
 CLONES = set()
 
 
-@app.on_message(filters.command(["clone", "host", "deploy"]) & SUDOERS)
+@app.on_message(filters.command(["clone", "host", "deploy"]) & SUDO_USERS)
 async def clone_txt(client, message):
     userbot = await get_assistant(LOGGER_ID)
     if len(message.command) > 1:
@@ -153,7 +153,7 @@ async def restart_bots():
         logging.exception("Error while restarting bots.")
 
 
-@app.on_message(filters.command("cloned") & SUDOERS)
+@app.on_message(filters.command("cloned") & SUDO_USERS)
 async def list_cloned_bots(client, message):
     try:
         cloned_bots = clonebotdb.find()
@@ -177,7 +177,7 @@ async def list_cloned_bots(client, message):
         await message.reply_text("**An error occurred while listing cloned bots.**")
 
 
-@app.on_message(filters.command("delallclone") & SUDOERS)
+@app.on_message(filters.command("delallclone") & SUDO_USERS)
 async def delete_all_cloned_bots(client, message):
     try:
         a = await message.reply_text("**Deleting all cloned bots...**")
