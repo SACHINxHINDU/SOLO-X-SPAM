@@ -1,6 +1,6 @@
 import re
 import logging
-from telethon import MongoClient
+from pymongo import MongoClient
 from telethon import Client, filters
 from telethon.types import Message
 from telethon.errors.exceptions.bad_request_400 import AccessTokenExpired, AccessTokenInvalid
