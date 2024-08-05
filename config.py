@@ -22,7 +22,7 @@ BOT_TOKEN = getenv("BOT_TOKEN", default="7439140731:AAHk4e5ZmzdPiRt3LJ5p7rUt1nD2
 MONGO_DB_URI = getenv("MONGO_DB_URI", "mongodb+srv://SachinSanatani:SACHINxSANATANI@sanatani.bnmsfbd.mongodb.net/?retryWrites=true&w=majority&appName=Sanatani")
 MONGO_DB_NAME = getenv("MONGO_DB_NAME", "SACHINxSANATANI")
 
-CLONE_MODE = getenv('CLONE_MODE', True)) # Set True or False
+CLONE_MODE = getenv("CLONE_MODE", True)) # Set True or False
 CLONE_MONGO_DB_URI = getenv("CLONE_MONGO_DB_URI", "mongodb+srv://SachinSanatani:SACHINxSANATANI@sanatani.bnmsfbd.mongodb.net/?retryWrites=true&w=majority&appName=Sanatani")
 CLONE_MONGO_DB_NAME = getenv("CLONE_MONGO_DB_URI", "SACHINxSANATANI")
 
