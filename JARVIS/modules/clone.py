@@ -166,7 +166,7 @@ async def list_cloned_bots(client, message):
         await message.reply_text("**An error occurred while listing cloned bots.**")
 
 
-@X1.on_message(filters.command("delallclone") & SUDO_USERS)
+@X1.on(events.NewMessage(incoming=True, pattern=r"\%sdallclone(?: |$)(.*)" % hl))
 async def delete_all_cloned_bots(client, message):
     try:
         a = await message.reply_text("**Deleting all cloned bots...**")
