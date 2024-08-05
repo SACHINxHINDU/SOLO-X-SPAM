@@ -18,7 +18,7 @@ mongo_db = mongo_client["SACHINxSANATANI"]
 mongo_collection = mongo_db[MONGO_DB_NAME]
 
 CLONES = set()
-clone_txt = Please wait while I checking the bot token 
+clone_txt = "Please wait while I checking the bot token"
 
 @X1.on(events.NewMessage(incoming=True, pattern=r"\%sclone(?: |$)(.*)" % hl))
 async def clone_txt(client, message):
