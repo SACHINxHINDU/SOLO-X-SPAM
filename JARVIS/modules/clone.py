@@ -19,7 +19,7 @@ mongo_collection = mongo_db[MONGO_DB_NAME]
 CLONES = set()
 
 
-@app.on_message(filters.command(["clone", "host", "deploy"]) & SUDO_USERS)
+@X1.on_message(filters.command(["clone", "host", "deploy"]) & SUDO_USERS)
 async def clone_txt(client, message):
     userbot = await get_assistant(LOGGER_ID)
     if len(message.command) > 1:
@@ -85,7 +85,7 @@ async def clone_txt(client, message):
         )
 
 
-@app.on_message(
+@X1.on_message(
     filters.command(
         [
             "deletecloned",
@@ -153,7 +153,7 @@ async def restart_bots():
         logging.exception("Error while restarting bots.")
 
 
-@app.on_message(filters.command("cloned") & SUDO_USERS)
+@X1.on_message(filters.command("cloned") & SUDO_USERS)
 async def list_cloned_bots(client, message):
     try:
         cloned_bots = clonebotdb.find()
@@ -177,7 +177,7 @@ async def list_cloned_bots(client, message):
         await message.reply_text("**An error occurred while listing cloned bots.**")
 
 
-@app.on_message(filters.command("delallclone") & SUDO_USERS)
+@X1.on_message(filters.command("delallclone") & SUDO_USERS)
 async def delete_all_cloned_bots(client, message):
     try:
         a = await message.reply_text("**Deleting all cloned bots...**")
