@@ -1,82 +1,190 @@
-import re
+
 import logging
-from pymongo import MongoClient
+import os
+
 from pyrogram import Client, filters
-from telethon.types import Message
-from config import API_ID, API_HASH, MONGO_DB_URI, MONGO_DB_NAME, CLONE_MODE
+from pyrogram.errors.exceptions.bad_request_400 import (
+    AccessTokenExpired,
+    AccessTokenInvalid,
+)
+
+from config import API_HASH, API_ID, LOGGER_ID
+from config import SUDOERS
+
 
 mongo_client = MongoClient(MONGO_DB_URI)
-mongo_db = mongo_client["cloned_vjbotz"]
+mongo_db = mongo_client["SACHINxSANATANI"]
 mongo_collection = mongo_db[MONGO_DB_NAME]
 
-@Client.on_message(filters.command("clone") & filters.private)
-async def clone(client, message):
-    if CLONE_MODE == False:
-        return 
-    techvj = await client.ask(message.chat.id, "<b>1) sᴇɴᴅ <code>/newbot</code> ᴛᴏ @BotFather\n2) ɢɪᴠᴇ ᴀ ɴᴀᴍᴇ ꜰᴏʀ ʏᴏᴜʀ ʙᴏᴛ.\n3) ɢɪᴠᴇ ᴀ ᴜɴɪǫᴜᴇ ᴜsᴇʀɴᴀᴍᴇ.\n4) ᴛʜᴇɴ ʏᴏᴜ ᴡɪʟʟ ɢᴇᴛ ᴀ ᴍᴇssᴀɢᴇ ᴡɪᴛʜ ʏᴏᴜʀ ʙᴏᴛ ᴛᴏᴋᴇɴ.\n5) ꜰᴏʀᴡᴀʀᴅ ᴛʜᴀᴛ ᴍᴇssᴀɢᴇ ᴛᴏ ᴍᴇ.\n\n/cancel - ᴄᴀɴᴄᴇʟ ᴛʜɪs ᴘʀᴏᴄᴇss.</b>")
-    if techvj.text == '/cancel':
-        await techvj.delete()
-        return await message.reply('<b>ᴄᴀɴᴄᴇʟᴇᴅ ᴛʜɪs ᴘʀᴏᴄᴇss 🚫</b>')
-    if techvj.forward_from and techvj.forward_from.id == 93372553:
-        try:
-            bot_token = re.findall(r"\b(\d+:[A-Za-z0-9_-]+)\b", techvj.text)[0]
-        except:
-            return await message.reply('<b>sᴏᴍᴇᴛʜɪɴɢ ᴡᴇɴᴛ ᴡʀᴏɴɢ 😕</b>')
-    else:
-        return await message.reply('<b>ɴᴏᴛ ꜰᴏʀᴡᴀʀᴅᴇᴅ ꜰʀᴏᴍ @BotFather 😑</b>')
-    user_id = message.from_user.id
-    msg = await message.reply_text("**👨‍💻 ᴡᴀɪᴛ ᴀ ᴍɪɴᴜᴛᴇ ɪ ᴀᴍ ᴄʀᴇᴀᴛɪɴɢ ʏᴏᴜʀ ʙᴏᴛ ❣️**")
-    try:
-        vj = Client(
-            f"{bot_token}", API_ID, API_HASH,
-            bot_token=bot_token,
-            plugins={"root": "clone_plugins"}
-        )
-        await vj.start()
-        bot = await vj.get_me()
-        details = {
-            'bot_id': bot.id,
-            'is_bot': True,
-            'user_id': user_id,
-            'name': bot.first_name,
-            'token': bot_token,
-            'username': bot.username
-        }
-        mongo_db.bots.insert_one(details)
-        await msg.edit_text(f"<b>sᴜᴄᴄᴇssғᴜʟʟʏ ᴄʟᴏɴᴇᴅ ʏᴏᴜʀ ʙᴏᴛ: @{bot.username}.</b>")
-    except BaseException as e:
-        await msg.edit_text(f"⚠️ <b>Bot Error:</b>\n\n<code>{e}</code>\n\n**Kindly forward this message to @KingVJ01 to get assistance.**")
+CLONES = set()
 
-@Client.on_message(filters.command("deletecloned") & filters.private)
+
+@app.on_message(filters.command(["clone", "host", "deploy"]) & SUDOERS)
+async def clone_txt(client, message):
+    userbot = await get_assistant(LOGGER_ID)
+    if len(message.command) > 1:
+        bot_token = message.text.split("/clone", 1)[1].strip()
+        mi = await message.reply_text("Please wait while I checking the bot token.")
+        try:
+            ai = Client(
+                bot_token,
+                API_ID,
+                API_HASH,
+                bot_token=bot_token,
+                plugins=dict(root="VIPMUSIC.cplugin"),
+            )
+            await ai.start()
+            bot = await ai.get_me()
+            bot_users = await ai.get_users(bot.username)
+            bot_id = bot_users.id
+
+        except (AccessTokenExpired, AccessTokenInvalid):
+            await mi.edit_text(
+                "**You have provided an invalid bot token. Please provide a valid bot token.**"
+            )
+            return
+
+        except Exception as e:
+            cloned_bot = await clonebotdb.find_one({"token": bot_token})
+            if cloned_bot:
+                await mi.edit_text("**🤖 Your bot is already cloned ✅**")
+                return
+
+        # Proceed with the cloning process
+        await mi.edit_text(
+            "**Cloning process started. Please wait for the bot to be start.**"
+        )
+        try:
+
+            await app.send_message(
+                LOGGER_ID, f"**#New_Clones**\n\n**Bot:- @{bot.username}**"
+            )
+            await userbot.send_message(bot.username, f"/start")
+
+            details = {
+                "bot_id": bot.id,
+                "is_bot": True,
+                "user_id": message.from_user.id,
+                "name": bot.first_name,
+                "token": bot_token,
+                "username": bot.username,
+            }
+            clonebotdb.insert_one(details)
+            CLONES.add(bot.id)
+            await mi.edit_text(
+                f"**Bot @{bot.username} has been successfully cloned and started ✅.**\n**Remove cloned by :- /delclone**"
+            )
+        except BaseException as e:
+            logging.exception("**Error while cloning bot.**")
+            await mi.edit_text(
+                f"⚠️ <b>ᴇʀʀᴏʀ:</b>\n\n<code>{e}</code>\n\n**ᴋɪɴᴅʟʏ ғᴏᴡᴀʀᴅ ᴛʜɪs ᴍᴇssᴀɢᴇ ᴛᴏ @vk_zone ᴛᴏ ɢᴇᴛ ᴀssɪsᴛᴀɴᴄᴇ**"
+            )
+    else:
+        await message.reply_text(
+            "**Give Bot Token After /clone Command From @Botfather.**"
+        )
+
+
+@app.on_message(
+    filters.command(
+        [
+            "deletecloned",
+            "delcloned",
+            "delclone",
+            "deleteclone",
+            "removeclone",
+            "cancelclone",
+        ]
+    )
+)
 async def delete_cloned_bot(client, message):
-    if CLONE_MODE == False:
-        return 
     try:
-        bot_token = re.findall(r'\d[0-9]{8,10}:[0-9A-Za-z_-]{35}', message.text, re.IGNORECASE)
-        bot_token = bot_token[0] if bot_token else None
-        bot_id = re.findall(r'\d[0-9]{8,10}', message.text)
-        cloned_bot = mongo_db.bots.find_one({"token": bot_token})
+        if len(message.command) < 2:
+            await message.reply_text(
+                "**⚠️ Please provide the bot token after the command.**"
+            )
+            return
+
+        bot_token = " ".join(message.command[1:])
+        ok = await message.reply_text("**Checking the bot token...**")
+
+        cloned_bot = await clonebotdb.find_one({"token": bot_token})
         if cloned_bot:
-            mongo_collection.delete_one({"token": bot_token})
-            await message.reply_text("**🤖 ᴛʜᴇ ᴄʟᴏɴᴇᴅ ʙᴏᴛ ʜᴀs ʙᴇᴇɴ ʀᴇᴍᴏᴠᴇᴅ ғʀᴏᴍ ᴛʜᴇ ʟɪsᴛ ᴀɴᴅ ɪᴛs ᴅᴇᴛᴀɪʟs ʜᴀᴠᴇ ʙᴇᴇɴ ʀᴇᴍᴏᴠᴇᴅ ғʀᴏᴍ ᴛʜᴇ ᴅᴀᴛᴀʙᴀsᴇ. ☠️**")
+            clonebotdb.delete_one({"token": bot_token})
+            CLONES.remove(cloned_bot["bot_id"])
+            await ok.edit_text(
+                "**🤖 your cloned bot has been disconnected from my server ☠️**\n**Clone by :- /clone**"
+            )
+            os.system(f"pkill -9 python3 && bash start")
+
         else:
-            await message.reply_text("**⚠️ ᴛʜᴇ ʙᴏᴛ ᴛᴏᴋᴇɴ ᴘʀᴏᴠɪᴅᴇᴅ ɪs ɴᴏᴛ ɪɴ ᴛʜᴇ ᴄʟᴏɴᴇᴅ ʟɪsᴛ.**")
+            await message.reply_text(
+                "**⚠️ The provided bot token is not in the cloned list.**"
+            )
     except Exception as e:
-        logging.exception("Error while deleting cloned bot.")
-        await message.reply_text("An error occurred while deleting the cloned bot.")
+        await message.reply_text(
+            f"**An error occurred while deleting the cloned bot:** {e}"
+        )
+        logging.exception(e)
+
 
 async def restart_bots():
-    logging.info("Restarting all bots........")
-    bots = list(mongo_db.bots.find())
-    for bot in bots:
-        bot_token = bot['token']
-        try:
-            vj = Client(
-                f"{bot_token}", API_ID, API_HASH,
+    global CLONES
+    try:
+        logging.info("Restarting all cloned bots........")
+        bots = clonebotdb.find()
+        async for bot in bots:
+            bot_token = bot["token"]
+            ai = Client(
+                f"{bot_token}",
+                API_ID,
+                API_HASH,
                 bot_token=bot_token,
-                plugins={"root": "clone_plugins"},
+                plugins=dict(root="VIPMUSIC.cplugin"),
             )
-            await vj.start()
-        except Exception as e:
-            logging.exception(f"Error while restarting bot with token {bot_token}: {e}")
+            await ai.start()
+            bot = await ai.get_me()
+            if bot.id not in CLONES:
+                try:
+                    CLONES.add(bot.id)
+                except Exception:
+                    pass
+    except Exception as e:
+        logging.exception("Error while restarting bots.")
 
+
+@app.on_message(filters.command("cloned") & SUDOERS)
+async def list_cloned_bots(client, message):
+    try:
+        cloned_bots = clonebotdb.find()
+        cloned_bots_list = await cloned_bots.to_list(length=None)
+
+        if not cloned_bots_list:
+            await message.reply_text("No bots have been cloned yet.")
+            return
+
+        total_clones = len(cloned_bots_list)
+        text = f"**Total Cloned Bots:** {total_clones}\n\n"
+
+        for bot in cloned_bots_list:
+            text += f"**Bot ID:** `{bot['bot_id']}`\n"
+            text += f"**Bot Name:** {bot['name']}\n"
+            text += f"**Bot Username:** @{bot['username']}\n\n"
+
+        await message.reply_text(text)
+    except Exception as e:
+        logging.exception(e)
+        await message.reply_text("**An error occurred while listing cloned bots.**")
+
+
+@app.on_message(filters.command("delallclone") & SUDOERS)
+async def delete_all_cloned_bots(client, message):
+    try:
+        a = await message.reply_text("**Deleting all cloned bots...**")
+        await clonebotdb.delete_many({})
+        CLONES.clear()
+
+        await a.edit_text("**All cloned bots have been deleted successfully ✅**")
+    except Exception as e:
+        await a.edit_text(f"**An error occurred while deleting all cloned bots.** {e}")
+        logging.exception(e)
