@@ -7,7 +7,7 @@ from pyrogram.errors.exceptions.bad_request_400 import (
     AccessTokenExpired,
     AccessTokenInvalid,
 )
-
+from pymongo import MongoClient
 from config import API_HASH, API_ID, LOGGER_ID
 from config import X1, SUDO_USERS
 
